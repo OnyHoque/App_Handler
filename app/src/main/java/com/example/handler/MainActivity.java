@@ -1,8 +1,12 @@
 package com.example.handler;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 
+import android.Manifest;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -23,6 +27,8 @@ public class MainActivity extends AppCompatActivity {
         btn_reset = findViewById(R.id.btn_reset);
         edit_pin = findViewById(R.id.edit_pin);
 
+        Req_Permission();
+
         btn_enter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -42,5 +48,14 @@ public class MainActivity extends AppCompatActivity {
                 toast.show();
             }
         });
+    }
+
+    private void Req_Permission() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(MainActivity.this,
+                    new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                    1);
+        }
     }
 }
